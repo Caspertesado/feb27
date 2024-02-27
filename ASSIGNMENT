@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+
+namespace PersonWeightApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Person> persons = new List<Person>();
+
+            Console.WriteLine("Welcome to the Person Weight Tracker!");
+
+            // Loop to initialize objects and ask for user input
+            bool addingPersons = true;
+            while (addingPersons)
+            {
+                Console.WriteLine("\nPlease enter the person's name (or type 'done' to finish adding):");
+                string name = Console.ReadLine();
+
+                if (name.ToLower() == "done")
+                {
+                    addingPersons = false;
+                    break;
+                }
+
+                Console.WriteLine("Please enter the person's weight:");
+                int weight;
+                while (!int.TryParse(Console.ReadLine(), out weight))
+                {
+                    Console.WriteLine("Invalid input! Please enter a valid integer for weight:");
+                }
+
+                Person person = new Person(name, weight);
+                persons.Add(person);
+            }
+
+            // Display all names and calculate total weight
+            Console.WriteLine("\nList of Persons:");
+            int totalWeight = 0;
+            foreach (var person in persons)
+            {
+                Console.WriteLine($"Name: {person.Name}, Weight: {person.Weight}");
+                totalWeight += person.Weight;
+            }
+
+            Console.WriteLine($"\nTotal weight of all persons: {totalWeight}");
+
+            Console.WriteLine("\nThank you for using the Person Weight Tracker!");
+            Console.ReadLine();
+        }
+    }
+
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Weight { get; set; }
+
+        public Person(string name, int weight)
+        {
+            Name = name;
+            Weight = weight;
+        }
+    }
+}
